@@ -1,19 +1,22 @@
-function imprimirHTML (M) {
-  var n = M.length;
-  for (var i = 0; i < n; i++) {
-        console.log(M[i]) ; 
-  }  
+function imprimirHTML (n) {
+  var h = "";
+  for (var i = 0; i <=  n; i++) {
+        console.log(hombre[i]);
+        h += hombre[i] + "</br>" 
+  }
+  console.log(hombre[hombre.length - 1]);
+  document.getElementById("hombresito").innerHTML = h; 
 } 
 
 
 function imprimirMatriz (M) {
   var n = M.length;
-  var h = "";
+  //var h = "";
   for (var i = 0; i < n; i++) {
         console.log(M[i]) ;
-        h += M[i]+"</br>";
+       // h += M[i]+"</br>";
   }
-  document.getElementById("hombresito").innerHTML = h; 
+  //document.getElementById("hombresito").innerHTML = h; 
 } 
 
 
@@ -43,8 +46,8 @@ var hombre =  [        "________",
                        ];
 
 imprimirMatriz(hombre);
-var contar = 0;
-function todo(){
+
+function jugar(){
 
 var palabra = obtienerPalabraSecreta ();
 console.log(palabra);
@@ -56,10 +59,12 @@ empiezaJuega(palabra);
 
 function empiezaJuega(palabra){
   var intentos = 10;
+  var intFallos = arrayIntentosFallos();
+  var errores = 0;
+
   var a = arrayAstericos(palabra.length);
   for(var i = 0; i < intentos; i++)
   {
-    contar ++;
     var letra = prompt("Intento N."+(i+1)+"\n Ingresa una letra: ");
     var contarAsteriscos = 0;
     for(var j = 0; j < palabra.length; j++ )
@@ -74,10 +79,16 @@ function empiezaJuega(palabra){
       }
     }
     console.log(a);
-    console.log(i +"-"+contarAsteriscos+"--"+contar);
-    var palabrAdivinada = imprimirPalabraNueva(a);
-    //document.getElementById('palabrAdivinada').innerHTML = palabrAdivinada;
-    
+
+      intFallos[i][0] = i;
+      intFallos[i][1] = contarAsteriscos;
+      //var xx = verificarJugada(intFallos, i);
+      if(i > 0 && intFallos[i][1] == intFallos[i-1][1]){
+        errores++;
+        imprimirHTML(errores);
+        console.log(errores);
+      }
+
     if(i == intentos - 1)
     {
       alert("vuelve a intentarlo");
@@ -92,14 +103,6 @@ function empiezaJuega(palabra){
 
 }
 
-function imprimirPalabraNueva(a){
-  var palabras = "";
-  for(var i = 0; i < a.length; i++){
-    palabras += a[i]+",";
-  }
-  return palabras;
-}
-
 function arrayAstericos(n)
 {
   var a = [];
@@ -108,4 +111,14 @@ function arrayAstericos(n)
     a[i] = "*";
   }
   return a;
+}
+function arrayIntentosFallos(){
+  var s = [];
+  for (var i = 0; i < 10 ; i++) {
+    s[i] = [];
+    for(var j = 0; j < 2; j++){
+      s[i][j] = 0;
+    }
+  }
+  return s;
 }

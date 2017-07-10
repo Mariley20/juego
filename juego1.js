@@ -1,9 +1,12 @@
-function imprimirHTML (M) {
-  var n = M.length;
-  for (var i = 0; i < n; i++) {
-        console.log(M[i]) ; 
-  }  
-} 
+function imprimirHTML (n) {
+  var h = "";
+  for (var i = 0; i <=  n; i++) {
+        console.log(hombre[i]);
+        h += hombre[i] + "</br>" 
+  }
+  console.log(hombre[hombre.length - 1]);
+ // document.getElementById("hombresito").innerHTML = h; 
+}  
 
 
 function imprimirMatriz (M) {
@@ -13,7 +16,7 @@ function imprimirMatriz (M) {
         console.log(M[i]) ;
         h += M[i]+"</br>";
   }
-  document.getElementById("hombresito").innerHTML = h; 
+ // document.getElementById("hombresito").innerHTML = h; 
 } 
 
 
@@ -43,14 +46,140 @@ var hombre =  [        "________",
                        ];
 
 imprimirMatriz(hombre);
-var palabra = obtienerPalabraSecreta();
-console.log(palabra);
+//var palabra = obtienerPalabraSecreta();
+//console.log(palabra);
 
-function jugar(i){
+
+function jugar(){
 	var html = "";
-	html += "<p><input type='text' id='cuadro' />";
-	html += "<button onclick='intento()'>intento"+(i+1)+"</button></p>";
-	document.getElementById('palabrAdivinada').innerHTML = html;
+	html += "<p><input type='text' id='letrita' />";
+	html += "<button onclick='obtnerLetra()'>intento</button></p>";
+	resultado.innerHTML = html;
+}
+
+var i = 0; 
+
+function obtnerLetra(){
+  var letra = document.getElementById('letrita').value; //obtiene letra
+  var palabra = obtienerPalabraSecreta(); //obtinene palabra
+  console.log(palabra);
+  var contarAsteriscos = 0;
+  //--------------------------------- array lleno de asteriscos
+  var a = [];
+  for(var j = 0; i < palabra.length; j++){
+    a[j] = "*";
+  }
+  //---------------------------------  matriz de intentos y errores [] []
+  var intentosFallos = [];
+  for (var k = 0; k < 10 ; k++) {
+    intentosFallos[k] = [];
+    for(var j = 0; j < 2; j++){
+      intentosFallos[k][j] = 0;
+    }
+  }
+  //---------------------------------
+
+  for(var j = 0; j < palabra.length; j++ )
+    {
+      if(palabra[j] == letra)
+      {
+        a[j] = letra;
+      }
+      else if(a[j] == "*")
+      {
+        contarAsteriscos++;
+      } 
+    }
+
+    //----imprimir array a;
+    console.log(a);
+    console.log(i +"-"+contarAsteriscos);
+    //-----------
+    intentosFallos[i][0] = i;
+    intentosFallos[i][1] = contarAsteriscos;
+
+    //------gana o pierde
+    if(i > 0 && intFallos[i][1] == intFallos[i-1][1]){
+        errores++;
+        imprimirHTML(errores);
+        console.log(errores);
+      }
+
+    if(i == 10)
+    {
+      alert("vuelve a intentarlo");
+    }
+    else if(contarAsteriscos == 0)
+    {
+      alert("felicidades hazz ganado");
+    }
+    i++;
+}
+
+function empezarJuegar(palabra){
+  var intentos = 10;
+  var intFallos = intentosFallos();
+  var errores = 0;
+
+  var a = arrayAstericos(palabra.length);
+  for(var i = 0; i < intentos; i++)
+  {
+    var letra = prompt("Intento N."+(i+1)+"\n Ingresa una letra: ");
+    var contarAsteriscos = 0;
+    for(var j = 0; j < palabra.length; j++ )
+    {
+      if(palabra[j] == letra)
+      {
+        a[j] = letra;
+      }
+      else if(a[j] == "*")
+      {
+        contarAsteriscos++;
+      }
+    }
+    console.log(a);
+
+      intFallos[i][0] = i;
+      intFallos[i][1] = contarAsteriscos;
+      //var xx = verificarJugada(intFallos, i);
+      if(i > 0 && intFallos[i][1] == intFallos[i-1][1]){
+        errores++;
+        imprimirHTML(errores);
+        console.log(errores);
+      }
+
+    if(i == intentos - 1)
+    {
+      alert("vuelve a intentarlo");
+    }
+    else if(contarAsteriscos == 0)
+    {
+      alert("felicidades hazz ganado");
+      i = intentos;
+    }
+    
+  }
+
+}
+
+function arrayAstericos(n)
+{
+  var a = [];
+  for(var i = 0; i < n; i++)
+  {
+    a[i] = "*";
+  }
+  return a;
+}
+function arrayIntentosFallos(){
+  var s = [];
+  for (var i = 0; i < 10 ; i++) {
+    s[i] = [];
+    for(var j = 0; j < 2; j++){
+      s[i][j] = 0;
+    }
+  }
+  return s;
 }
 
 

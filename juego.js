@@ -5,18 +5,15 @@ function imprimirHTML (n) {
         h += hombre[i] + "</br>" 
   }
   console.log(hombre[hombre.length - 1]);
+
   document.getElementById("hombresito").innerHTML = h; 
 } 
 
-
 function imprimirMatriz (M) {
   var n = M.length;
-  //var h = "";
   for (var i = 0; i < n; i++) {
         console.log(M[i]) ;
-       // h += M[i]+"</br>";
   }
-  //document.getElementById("hombresito").innerHTML = h; 
 } 
 
 
